@@ -99,8 +99,8 @@ Previewer.propTypes = {
 
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
-  // "text/plain": PlaintextEditor,
-  // "text/markdown": MarkdownEditor,
+  "text/plain": PlaintextEditor,
+  "text/markdown": MarkdownEditor,
 };
 
 function PlaintextFilesChallenge() {
@@ -116,6 +116,12 @@ function PlaintextFilesChallenge() {
     console.log('Writing soon... ', file.name);
 
     // TODO: Write the file to the `files` array
+    let newFiles = [];
+    // append unmodified files first
+    newFiles = files.filter((curFile) => curFile.name !== file.name);
+    // append modified file
+    newFiles.push(file);
+    setFiles(newFiles);
   };
 
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
@@ -124,6 +130,7 @@ function PlaintextFilesChallenge() {
     <div className={css.page}>
       <Head>
         <title>Rethink Engineering Challenge</title>
+        <link href="/static/styles.css" rel="stylesheet" />
       </Head>
       <aside>
         <header>
